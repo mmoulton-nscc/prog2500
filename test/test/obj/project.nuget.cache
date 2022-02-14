@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QKVdCGNpP36xz/F3FGXHG91FJy8YlL9v5132Tji1DgPBWxISvGqQzdChidJRYEarrbqQgsGfjF1zvDgZpvf2Ag==",
+  "success": true,
+  "projectFilePath": "E:\\Winter 2022\\Windows\\test\\test\\test.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rando\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}
