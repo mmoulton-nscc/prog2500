@@ -90,25 +90,33 @@ namespace Assignment1
         //Opens file and loads meta data into display
         private void Open_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            OpenFileDialog fileDlg = new OpenFileDialog();
-
-            fileDlg.Filter = "MP3 files (*.mp3)|*.mp3";
-
-            if (fileDlg.ShowDialog() == true)
+            try
             {
-                currentFile = TagLib.File.Create(fileDlg.FileName);
-                myMedia.Source = new Uri(fileDlg.FileName);
+                OpenFileDialog fileDlg = new OpenFileDialog();
 
-                var title = currentFile.Tag.Title;
-                var artist = currentFile.Tag.FirstAlbumArtist;
-                var album = currentFile.Tag.Album;
-                var year = currentFile.Tag.Year;
+                fileDlg.Filter = "MP3 files (*.mp3)|*.mp3";
 
-                myMeta.songTitle.Text = title;
-                myMeta.songArtist.Text = artist;
-                myMeta.songAlbum.Text = album;
-                myMeta.songYear.Text = year.ToString();
+                if (fileDlg.ShowDialog() == true)
+                {
+                    currentFile = TagLib.File.Create(fileDlg.FileName);
+                    myMedia.Source = new Uri(fileDlg.FileName);
+
+                    var title = currentFile.Tag.Title;
+                    var artist = currentFile.Tag.FirstAlbumArtist;
+                    var album = currentFile.Tag.Album;
+                    var year = currentFile.Tag.Year;
+
+                    myMeta.songTitle.Text = title;
+                    myMeta.songArtist.Text = artist;
+                    myMeta.songAlbum.Text = album;
+                    myMeta.songYear.Text = year.ToString();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         //editable only when there is a source
@@ -117,10 +125,26 @@ namespace Assignment1
             e.CanExecute = myMedia.Source != null;
         }
         
-        //Saves metadata
+        //Stops song, stops myMedia from using it, saves metadata, restarts song
         private void Edit_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            
+            try
+            {
+                var temp = myMedia.Source;
+                myMedia.Stop();
+                myMedia.Source = null;
+                currentFile.Tag.Title = myMeta.songTitle.Text;
+                currentFile.Tag.Album = myMeta.songAlbum.Text;
+                currentFile.Tag.AlbumArtists[0] = myMeta.songArtist.Text;
+                currentFile.Tag.Year = uint.Parse(myMeta.songYear.Text);
+                currentFile.Save();
+                myMedia.Source = temp;
+                myMedia.Play();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         //playable when appropriate
