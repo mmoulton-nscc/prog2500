@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Mark Moulton's MP3 Player" Height="266" Width="489">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" CanExecute="Open_CanExecute" Executed="Open_Executed" />
+        <CommandBinding Command="ApplicationCommands.Properties" CanExecute="Edit_CanExecute" Executed="Edit_Executed" />
+        <CommandBinding Command="MediaCommands.Play" CanExecute="Play_CanExecute" Executed="Play_Executed" />
+        <CommandBinding Command="MediaCommands.Pause" CanExecute="Pause_CanExecute" Executed="Pause_Executed" />
+        <CommandBinding Command="MediaCommands.Stop" CanExecute="Stop_CanExecute" Executed="Stop_Executed" />
+    </Window.CommandBindings>
+
     <Grid>
+        <MediaElement x:Name="myMedia" LoadedBehavior="Manual"/>
+
+
+        <StackPanel Orientation="Horizontal" Margin="15">
+            <DockPanel Margin="15">
+                <Button DockPanel.Dock="Top" Command="ApplicationCommands.Open">Load File</Button>
+                <Button VerticalAlignment="Bottom" Command="ApplicationCommands.Properties">Save Current File</Button>
+            </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <StatusBar>
+                        <StatusBarItem>
+                            <Slider x:Name="mySlider" Height="20" Width="200"  HorizontalAlignment="Center" Margin="15" Thumb.DragStarted="mySlider_DragStarted"  Thumb.DragCompleted="mySlider_DragCompleted" ValueChanged="mySlider_ValueChanged"/>
+                        </StatusBarItem>
+                        <StatusBarItem>
+                            <TextBlock x:Name="myTimer" HorizontalAlignment="Center">0:00:00</TextBlock>
+                        </StatusBarItem>
+                    </StatusBar>
+                    <StackPanel Orientation="Horizontal" Margin="15" Width="185">
+                        <Button x:Name="Play" Content="Play" Command="MediaCommands.Play" Height="20" Width="60"/>
+                        <Button x:Name="Pause" Content="Pause" Command="MediaCommands.Pause" Height="20" Width="60"/>
+                        <Button x:Name="Stop" Content="Stop" Command="MediaCommands.Stop" Height="20" Width="60"/>
+                    </StackPanel>
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+        </StackPanel>
+        <local:ViewMetaData x:Name="myMeta"  HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
     </Grid>
+
+
 </Window>
