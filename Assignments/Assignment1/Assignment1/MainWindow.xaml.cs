@@ -125,7 +125,7 @@ namespace Assignment1
             e.CanExecute = myMedia.Source != null;
         }
         
-        //Stops song, stops myMedia from using it, saves metadata, restarts song
+        //Stops song, stops myMedia from using it, saves metadata, regives it to myMedia, restarts song
         private void Edit_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             try
